@@ -13,6 +13,8 @@ tags:
     description: Endpoint for user registration
   - name: login
     description: Endpoint for verifying who a user is
+  - name: admin
+  - name: employee
 
 servers:
   # Added by API Auto Mocking Plugin
@@ -21,7 +23,7 @@ servers:
   - url: https://shirayuki.site
     description: primarry link
 
-paths: 
+paths:
   /register:
     post:
       tags:
@@ -35,24 +37,32 @@ paths:
               properties:
                 name:
                   type: string
-                email:
+                birth_of_date:
                   type: string
-                  format: email
-                phone:  
+                nip:
                   type: string
-                address:  
+                gender:
+                  type: string
+                position:
+                  type: string
+                phone:
+                  type: string
+                address:
                   type: string
                 password:
                   type: string
                   format: password
             example:
               name: "Fauzi Sofyan"
-              email: "fauzilax@gmail.com"
+              birth_of_date: "31 january 2000"
+              nip: "21"
+              gender: "male"
+              postion: "backend engineer"
               phone: "0813456"
               address: bdg
               password: "123"
       responses:
-        201: 
+        201:
           description: "success insert data"
           content:
             application/json:
@@ -64,13 +74,57 @@ paths:
               example:
                 message: "Success create account"
         400:
-          $ref: '#/components/responses/400'
+          $ref: "#/components/responses/400"
         500:
-          $ref: '#/components/responses/500'
-
-
-
+          $ref: "#/components/responses/500"
+  /login:
+    post:
+      tags:
+        - login
+      description: login feature for admin and employee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                nip:
+                  type: string
+                password:
+                  type: string
+                  format: password
+            example:
+              nip: "21"
+              password: "123"
+      responses:
+        200:
+          description: "login success"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/responseObject"
+              example:
+                data:
+                  id: 1
+                  name: "Fauzi Sofyan"
+                  nip: 21
+                  gender: "male"
+                  postion: "backend engineer"
+                  token: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdXRob3JpemVkIjp0cnVlLCJ1c2VySUQiOjR9.QTZxERh4CwC_UnL_eJvTi_A_qdLeBZ-IjR4nqoxjodk"
+                message: "login success"
+        400:
+          $ref: "#/components/responses/400"
+        500:
+          $ref: "#/components/responses/500"
 components:
+  schemas:
+    responseObject:
+      type: object
+      properties:
+        data:
+          type: object
+        message:
+          type: string
   responses:
     400:
       description: "error from user"
