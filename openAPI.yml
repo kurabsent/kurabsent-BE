@@ -1,0 +1,96 @@
+openapi: 3.0.3
+info:
+  title: E - Commerce
+  description: This is API for Group Project By Alterra Academy
+  version: "1.0.0"
+  contact:
+    email: fauzilax@gmail.com
+  license:
+    name: Apache 2.0
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+tags:
+  - name: register
+    description: Endpoint for user registration
+  - name: login
+    description: Endpoint for verifying who a user is
+
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/fauzilax/kurabsent/1.0.0
+  - url: https://shirayuki.site
+    description: primarry link
+
+paths: 
+  /register:
+    post:
+      tags:
+        - register
+      description: feature for admin registration new employee
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                  format: email
+                phone:  
+                  type: string
+                address:  
+                  type: string
+                password:
+                  type: string
+                  format: password
+            example:
+              name: "Fauzi Sofyan"
+              email: "fauzilax@gmail.com"
+              phone: "0813456"
+              address: bdg
+              password: "123"
+      responses:
+        201: 
+          description: "success insert data"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+              example:
+                message: "Success create account"
+        400:
+          $ref: '#/components/responses/400'
+        500:
+          $ref: '#/components/responses/500'
+
+
+
+components:
+  responses:
+    400:
+      description: "error from user"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: "Bad request"
+    500:
+      description: "error from server"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              message:
+                type: string
+          example:
+            message: "Internal server error"
