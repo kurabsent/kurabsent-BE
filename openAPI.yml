@@ -1,6 +1,6 @@
 openapi: 3.0.3
 info:
-  title: E - Commerce
+  title: Kurab-sent
   description: This is API for Group Project By Alterra Academy
   version: "1.0.0"
   contact:
